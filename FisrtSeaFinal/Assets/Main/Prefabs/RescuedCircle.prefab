@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1081334248423790596}
   m_Layer: 0
   m_Name: ModelCircle
-  m_TagString: Untagged
+  m_TagString: Circle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,7 +94,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3300517436671145315}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 9a176307b0d0b3b4aa4e9778d22a1603, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -120,6 +120,7 @@ GameObject:
   - component: {fileID: 658300128395627880}
   - component: {fileID: 3262675333084245153}
   - component: {fileID: 5392013229127001481}
+  - component: {fileID: 7190828758383184476}
   m_Layer: 0
   m_Name: RescuedCircle
   m_TagString: Circle
@@ -297,3 +298,17 @@ MonoBehaviour:
   m_LimitAngularVelocity: 0
   m_MaxLinearVelocityDelta: 10
   m_MaxAngularVelocityDelta: 20
+--- !u!114 &7190828758383184476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4795907792361319809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af66661c2560a794dae343d1e7709100, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToSpawn: {fileID: 4795907792361319809}
+  spawnPoint: {fileID: 8338618624184535762, guid: 173bd8039b1cca64288b6b6a236504cb, type: 3}

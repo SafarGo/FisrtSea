@@ -1,9 +1,12 @@
 using System.Resources;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+
     [Header("Настройки игры")]
     public float gameDuration = 300f;
     public float min_time = 30f;
@@ -16,11 +19,13 @@ public class GameManager : MonoBehaviour
     public bool victimRescued = false;
     public bool shipIntact = true;
     public int totalDisasters = 0;
+    public float ShipHP = 100f;
 
     [Header("Счетчики")]
     public int maxConcurrentDisasters = 2;
     public int activeDisastersCount = 0;
     public int crewMembersAvailable = 2;
+    
 
     [Header("Статические события")]
     public static bool OnGameStart = false;
@@ -32,6 +37,14 @@ public class GameManager : MonoBehaviour
 
     [Header("Поля для элементов")]
     public TMP_Text timer_text;
+    public TMP_Text _text;
+    public Slider Slider;
+
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
@@ -47,11 +60,12 @@ public class GameManager : MonoBehaviour
         CheckLoseConditions();
         ResetStaticEvents();
         GetFormattedTime();
+        Slider.value = ShipHP;
     }
 
     void InitializeGame()
     {
-        currentTime = gameDuration; // Начинаем с максимального времени
+        currentTime = gameDuration;
         disastersResolved = 0;
         activeDisastersCount = 0;
         currentGameState = "Playing";
@@ -67,17 +81,23 @@ public class GameManager : MonoBehaviour
 
     void CheckWinConditions()
     {
-        // Полный успех: время вышло + все условия выполнены
-        if (currentTime <= 0 && shipIntact && victimRescued && activeDisastersCount == 0)
+        if(disastersResolved == 2 && victimRescued)
         {
-            CompleteGame("Victory", "Полный успех");
+           _text.text = "УСПЕХ";
+        }
+        if (currentTime <= 0 && victimRescued && disastersResolved == 2)
+        {
+            CompleteGame("Успех", "Полный успех");
             return;
         }
-
-        // Базовый успех: время вышло, корабль цел
-        if (currentTime <= 0 && shipIntact)
+        if (currentTime <= 0 && disastersResolved != 2 && !victimRescued)
         {
-            CompleteGame("Victory", "Безопасно пришвартован");
+            CompleteGame("Неудача", "Не выполнены условия");
+        }
+
+        if(Slider.value ==0)
+        {
+            CompleteGame("Неудача", "Корабль потонул");
         }
     }
 
@@ -85,13 +105,8 @@ public class GameManager : MonoBehaviour
     {
         if (!shipIntact)
         {
-            CompleteGame("Failure", "Повреждён и потерпел крушение");
+            CompleteGame("Неудача", "Неудача");
             return;
-        }
-
-        if (crewMembersAvailable <= 0)
-        {
-            CompleteGame("Failure", "Экипаж выбыл из строя");
         }
     }
 
@@ -108,7 +123,7 @@ public class GameManager : MonoBehaviour
             OnGameLose = true;
         }
 
-        Debug.Log($"Игра завершена: {resultMessage}");
+        _text.text = $"{resultMessage}";
     }
 
     public void ReportDisasterResolved()
