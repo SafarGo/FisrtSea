@@ -1,4 +1,5 @@
 using System.Resources;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -29,6 +30,9 @@ public class GameManager : MonoBehaviour
     public static bool OnVictimRescued = false;
     public static bool OnShipDamaged = false;
 
+    [Header("Поля для элементов")]
+    public TMP_Text timer_text;
+
     void Start()
     {
         InitializeGame();
@@ -42,6 +46,7 @@ public class GameManager : MonoBehaviour
         CheckWinConditions();
         CheckLoseConditions();
         ResetStaticEvents();
+        GetFormattedTime();
     }
 
     void InitializeGame()
@@ -141,11 +146,11 @@ public class GameManager : MonoBehaviour
         return Mathf.Max(0f, currentTime);
     }
 
-    public string GetFormattedTime()
+    public void GetFormattedTime()
     {
         int minutes = Mathf.FloorToInt(currentTime / 60f);
         int seconds = Mathf.FloorToInt(currentTime % 60f);
-        return $"{minutes:00}:{seconds:00}";
+        timer_text.text =  $"{minutes:00}:{seconds:00}";
     }
 
     public float GetGameProgress()
