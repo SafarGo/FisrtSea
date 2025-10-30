@@ -49,7 +49,6 @@ public class GameManager : MonoBehaviour
         currentTime = gameDuration; // Начинаем с максимального времени
         disastersResolved = 0;
         activeDisastersCount = 0;
-        crewMembersAvailable = 2;
         currentGameState = "Playing";
 
         OnGameStart = true;
